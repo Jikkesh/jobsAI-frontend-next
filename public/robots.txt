@@ -1,0 +1,14 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Host
+Host: https://jobsai.in
+
+# Sitemaps
+Sitemap: https://jobsai.in/sitemap.xml
+Sitemap: https://jobsai.in/server-sitemap-index.xml
