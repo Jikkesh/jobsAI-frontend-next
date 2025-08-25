@@ -157,15 +157,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//googleads.g.doubleclick.net" />
         <link rel="dns-prefetch" href="//www.google.com" />
 
-        {/* Preload critical fonts */}
-        <link
-          rel="preload"
-          href="/_next/static/media/inter.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin=""
-        />
-
         {/* Schema.org structured data for Organization */}
         <script
           type="application/ld+json"

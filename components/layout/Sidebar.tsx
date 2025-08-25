@@ -90,7 +90,6 @@ const Sidebar = () => {
     try {
       setError('');
       const response: any = await jobsApi.getTrendingJobs(10);
-      console.log('Fetched trending jobs:', response);
       setTrendingJobs(response || []);
     } catch (err) {
       console.error('Error fetching trending jobs:', err);

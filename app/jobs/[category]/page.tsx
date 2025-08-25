@@ -102,10 +102,7 @@ export default async function CategoryJobsPage({ params }: Props) {
     const res: any = await jobsApi.getJobsByCategory(category, 1, PAGE_SIZE);
     initialJobs =  res?.jobs ?? (Array.isArray(res) ? res : []);
     initialTotal = res?.totalCount ?? (Array.isArray(initialJobs) ? initialJobs.length : 0);
-    console.log('Server: fetched initial jobs', initialJobs.length, 'total', initialTotal);
-
     initialJobs = initialJobs.map((j: any) => ({ ...j, type: j.type ?? 'Full-time' }));
-    console.log('Server: fetched initial jobs', initialJobs.length, 'total', initialTotal);
   } catch (err) {
     console.error('Server fetch category jobs failed', err);
     // fallback: empty list (client can still try to load more)
