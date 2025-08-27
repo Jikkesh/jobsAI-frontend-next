@@ -26,7 +26,7 @@ import { Metadata } from 'next';
 // API Call to Get Job By ID
 import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';
 import JobLogo from '@/components/jobLogo/JobLogo';
-import { isSpecified } from '@/lib/utils';
+import { getPostalCodeByCity, isSpecified } from '@/lib/utils';
 
 //Make API call to get job
 const GetJobById = async (id: string) => {
@@ -65,6 +65,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!job) {
     return {
       title: 'Job Not Found',
+      icons: {
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
+      },
     };
   }
 
@@ -75,6 +80,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `${job.job_role} position at ${job.company_name} - ${job.city}, ${job.state}, ${job.category}. Salary: ${job.salary_package}. Apply now!`,
     keywords: `${job.job_role}, ${job.company_name}, ${job.city}, ${job.state}, ${job.category}, jobs, careers, internship`,
     authors: [{ name: 'JobsAI Team' }],
+    // Add favicon configuration
+    icons: {
+      icon: [
+        { url: 'favicons/favicon.ico' },
+        { url: 'favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: 'favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      shortcut: 'favicons/favicon.ico',
+      apple: [
+        { url: 'favicons/apple-touch-icon.png' },
+        { url: 'favicons/apple-touch-icon-180x180.png', sizes: '180x180' },
+      ],
+      other: [
+        { rel: 'mask-icon', url: 'favicons/safari-pinned-tab.svg', color: '#2563eb' },
+      ],
+    },
     openGraph: {
       type: 'website',
       locale: 'en_US',
@@ -148,6 +169,8 @@ export default async function JobDetailPage({ params }: Props) {
               "value": job.job_slug.toString()
             },
             "datePosted": job.posted_on,
+            // Add validThrough - set to 60 days from posted date
+            "validThrough": new Date(new Date(job.posted_on).getTime() + 60 * 24 * 60 * 60 * 1000).toISOString(),
             "employmentType": job.category.toUpperCase(),
             "hiringOrganization": {
               "@type": "Organization",
@@ -160,7 +183,10 @@ export default async function JobDetailPage({ params }: Props) {
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": job.city,
-                "addressRegion": job.state
+                "addressRegion": job.state,
+                "addressCountry": "IN",
+                "postalCode": getPostalCodeByCity(job.city, job.state),
+                "streetAddress": job.city + ", " + job.state
               }
             },
             "baseSalary": {
@@ -168,6 +194,7 @@ export default async function JobDetailPage({ params }: Props) {
               "currency": "INR",
               "value": {
                 "@type": "QuantitativeValue",
+                "value": job.salary_package,
                 "unitText": "YEAR"
               }
             },
