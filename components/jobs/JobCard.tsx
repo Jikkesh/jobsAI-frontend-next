@@ -58,7 +58,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, featured = false }) => {
             <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
               {job.company_name ? (
                 <JobLogo
-                  src={`https://logo.clearbit.com/${job.company_name}.com`}
+                  src={job.company_name}
                   alt={`${job.company_name} logo`}
                   width={64}
                   height={64}

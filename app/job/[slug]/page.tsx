@@ -66,9 +66,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: 'Job Not Found',
       icons: {
-        icon: '/favicon.ico',
-        shortcut: '/favicon.ico',
-        apple: '/apple-touch-icon.png',
+        icon: '/favicons/favicon.ico',
+        shortcut: '/favicons/favicon.ico',
+        apple: '/favicons/apple-touch-icon.png',
       },
     };
   }
@@ -83,17 +83,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Add favicon configuration
     icons: {
       icon: [
-        { url: 'favicons/favicon.ico' },
-        { url: 'favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-        { url: 'favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicons/favicon.ico' },
+        { url: '/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       ],
-      shortcut: 'favicons/favicon.ico',
+      shortcut: '/favicons/favicon.ico',
       apple: [
-        { url: 'favicons/apple-touch-icon.png' },
-        { url: 'favicons/apple-touch-icon-180x180.png', sizes: '180x180' },
+        { url: '/favicons/apple-touch-icon.png' },
+        { url: '/favicons/apple-touch-icon-180x180.png', sizes: '180x180' },
       ],
       other: [
-        { rel: 'mask-icon', url: 'favicons/safari-pinned-tab.svg', color: '#2563eb' },
+        { rel: 'mask-icon', url: '/favicons/safari-pinned-tab.svg', color: '#2563eb' },
       ],
     },
     openGraph: {
@@ -216,7 +216,7 @@ export default async function JobDetailPage({ params }: Props) {
                   <div className="flex-shrink-0">
                     <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden">
                       <JobLogo
-                        src={`https://logo.clearbit.com/${job.company_name}.com`}
+                        src={job.company_name}
                         alt={`${job.company_name} logo`}
                         width={64}
                         height={64}

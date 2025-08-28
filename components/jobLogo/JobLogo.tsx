@@ -1,5 +1,6 @@
 "use client";
 
+import { API_BASE_URL } from "@/lib/api";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -16,27 +17,43 @@ export default function JobLogo({
     width = 64,
     height = 64,
 }: JobLogoProps) {
-    const resolveSrc = (url: string) => {
-        if (!url) return "/logo.png";
+    const resolveSrc = (companyName: string) => {
+        if (!companyName) return `${API_BASE_URL}/images/hiring.png`;
 
-        // Clean up spaces and lowercase
-        let domain = url.trim().toLowerCase();
+        // Clean up the company name
+        let cleanName = companyName.trim();
+        
+        // Remove common suffixes and prefixes
+        cleanName = cleanName
+            .replace(/\s+(Inc|LLC|Ltd|Corp|Corporation|Company|Co)\.?$/i, '')
+            .replace(/^(The\s+)/i, '')
+            .trim();
 
-        // If it has spaces, take only the first word
-        if (domain.includes(" ")) {
-            const firstWord = domain.split(" ")[0];
-            domain = `${firstWord}.com`;
+        // If it has spaces, take only the first word for the logo
+        if (cleanName.includes(" ")) {
+            cleanName = cleanName.split(" ")[0];
         }
 
-        // If it already looks like a domain, just keep it
-        if (!domain.includes(".")) {
-            domain = `${domain}.com`;
-        }
+        // Convert to lowercase for consistency
+        cleanName = cleanName.toLowerCase();
 
-        return `https://logo.clearbit.com/${domain}`;
+        // Remove any special characters except hyphens
+        cleanName = cleanName.replace(/[^a-z0-9-]/g, '');
+
+        // Use our backend API endpoint
+        return `${API_BASE_URL}/images/${cleanName}.png`;
     };
 
     const [imgSrc, setImgSrc] = useState(resolveSrc(src));
+    const [hasErrored, setHasErrored] = useState(false);
+
+    const handleError = () => {
+        if (!hasErrored) {
+            setHasErrored(true);
+            // Fallback to hiring.png through our backend
+            setImgSrc(`${API_BASE_URL}/images/hiring.png`);
+        }
+    };
 
     return (
         <Image
@@ -44,8 +61,9 @@ export default function JobLogo({
             alt={alt}
             width={width}
             height={height}
-            className="w-full h-full object-cover"
-            onError={() => setImgSrc("/logo.png")}
+            className="w-full h-full object-cover rounded"
+            onError={handleError}
+            unoptimized // Add this to prevent Next.js image optimization issues with external URLs
         />
     );
 }
