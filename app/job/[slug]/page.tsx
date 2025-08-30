@@ -229,12 +229,11 @@ export default async function JobDetailPage({ params }: Props) {
                       {job.job_role}
                     </h1>
                     <div className="flex items-center space-x-4 mb-4">
-                      <Link
-                        href={`/company/${job.company_name.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="text-xl font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                      <span
+                        className="text-xl font-semibold text-blue-600"
                       >
                         {job.company_name}
-                      </Link>
+                      </span>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getJobTypeColor(job.category)}`}>
                         {job.category}
                       </span>
