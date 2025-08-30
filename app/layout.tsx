@@ -119,7 +119,6 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: 'https://jobsai.in',
     languages: {
       'en-IN': 'https://jobsai.in',
     },
