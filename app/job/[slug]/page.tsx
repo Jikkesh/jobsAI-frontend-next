@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: `https://jobsai.in/jobs/${job.job_slug}`,
+      url: `https://jobsai.in/job/${job.job_slug}`,
       siteName: 'JobsAI',
       title: `${job.job_role} at ${job.company_name}`,
       description: `${job.job_role} position at ${job.company_name} - ${job.city}, ${job.state}, ${job.category}. Salary: ${job.salary_package}.`,
