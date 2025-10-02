@@ -24,6 +24,7 @@ export function middleware(req: NextRequest) {
 
   // For pages, force no-store so HTML is always fresh.
   const res = NextResponse.next();
+  console.log('Setting Cache-Control: no-store for', pathname);
   res.headers.set('Cache-Control', 'no-store, must-revalidate');
   return res;
 }
