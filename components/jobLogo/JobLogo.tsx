@@ -50,7 +50,6 @@ export default function JobLogo({
     const handleError = () => {
         if (!hasErrored) {
             setHasErrored(true);
-            // Fallback to hiring.png through our backend
             setImgSrc(`${API_BASE_URL}/images/hiring.png`);
         }
     };

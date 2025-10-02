@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -14,7 +16,8 @@ import JobCard from '@/components/jobs/JobCard';
 import AdSlot from '@/components/ads/AdSlot';
 import Sidebar from '@/components/layout/Sidebar';
 import { Metadata } from 'next';
-import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';import CategoryJobsClient from './CategoryJobsClient';
+import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';
+import CategoryJobsClient from './CategoryJobsClient';
 
 // Valid categories
 const validCategories = ['remote', 'fresher', 'internship', 'experienced'];
