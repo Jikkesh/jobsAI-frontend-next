@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   TrendingUp,
@@ -14,6 +12,7 @@ import {
 } from 'lucide-react';
 import AdSlot from '@/components/ads/AdSlot';
 import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';
+
 const popularPosts = [
   {
     id: '1',
@@ -80,52 +79,39 @@ type TrendingJob = {
   state?: string;
 };
 
-const Sidebar = () => {
-  const [trendingJobs, setTrendingJobs] = useState<TrendingJob[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [isRefreshing, setIsRefreshing] = useState(false);
+// Server-side function to fetch trending jobs
+async function fetchTrendingJobs(): Promise<TrendingJob[]> {
+  try {
+    const response: any = await jobsApi.getTrendingJobs(10);
+    return response || [];
+  } catch (err) {
+    console.error('Error fetching trending jobs:', err);
+    return [];
+  }
+}
 
-  const fetchTrendingJobs = async () => {
-    try {
-      setError('');
-      const response: any = await jobsApi.getTrendingJobs(10);
-      setTrendingJobs(response || []);
-    } catch (err) {
-      console.error('Error fetching trending jobs:', err);
-      setError('Failed to load trending jobs');
-    } finally {
-      setIsLoading(false);
-      setIsRefreshing(false);
-    }
-  };
+const formatDate = (dateString: any) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - date.getTime());
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  const handleRefreshTrending = async () => {
-    setIsRefreshing(true);
-    await fetchTrendingJobs();
-  };
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
+  return `${diffDays}d ago`;
+};
 
-  useEffect(() => {
-    fetchTrendingJobs();
-  }, []);
+const formatJobLocation = (job: any) => {
+  if (job.city && job.state) {
+    return `${job.city}, ${job.state}`;
+  }
+  return job.category || 'Remote';
+};
 
-  const formatDate = (dateString: any) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    return `${diffDays}d ago`;
-  };
-
-  const formatJobLocation = (job: any) => {
-    if (job.city && job.state) {
-      return `${job.city}, ${job.state}`;
-    }
-    return job.category || 'Remote';
-  };
+// Server Component
+const Sidebar = async () => {
+  // Fetch data on the server
+  const trendingJobs = await fetchTrendingJobs();
 
   return (
     <aside className="space-y-6">
@@ -209,86 +195,47 @@ const Sidebar = () => {
             <TrendingUp className="h-4 w-4 text-blue-600" />
             Trending Jobs
           </h3>
-          {/* <button
-            onClick={handleRefreshTrending}
-            disabled={isRefreshing}
-            className="p-1 text-gray-400 hover:text-blue-600 transition-colors disabled:opacity-50"
-            title="Refresh trending jobs"
-          >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-          </button> */}
         </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex items-center justify-center py-8">
-            <div className="flex items-center gap-2 text-gray-500">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm">Loading trending jobs...</span>
-            </div>
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && !isLoading && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-600 mb-2">{error}</p>
-            <button
-              onClick={fetchTrendingJobs}
-              className="text-xs text-red-700 hover:text-red-800 font-medium"
-            >
-              Try again
-            </button>
-          </div>
-        )}
-
         {/* Jobs List */}
-        {!isLoading && !error && (
-          <div className="space-y-3">
-            {trendingJobs.length > 0 ? (
-              trendingJobs.map((job) => (
-                <Link
-                  key={job.job_slug}
-                  href={`/job/${job?.job_slug}`}
-                  className="block p-3 rounded-lg hover:bg-gray-50 transition-colors group"
-                >
-                  <div className="flex items-start justify-between mb-1">
-                    <h4 className="font-medium text-gray-900 group-hover:text-blue-600 text-sm line-clamp-1 flex-grow">
-                      {job.job_role || job.title}
-                    </h4>
-                    {job.category === 'Remote' && (
-                      <span className="flex-shrink-0 ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
-                        Remote
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-600 mb-2 line-clamp-1">
-                    {job.company_name || job.company}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span className="line-clamp-1">{formatJobLocation(job)}</span>
-                    <span>{job.posted_on ? formatDate(job.posted_on) : formatDate(job.publishedAt)}</span>
-                  </div>
-                  {job.salary_package && (
-                    <div className="mt-1 text-xs text-blue-600 font-medium">
-                      {job.salary_package}
-                    </div>
+        <div className="space-y-3">
+          {trendingJobs.length > 0 ? (
+            trendingJobs.map((job) => (
+              <Link
+                key={job.job_slug}
+                href={`/job/${job?.job_slug}`}
+                className="block p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+              >
+                <div className="flex items-start justify-between mb-1">
+                  <h4 className="font-medium text-gray-900 group-hover:text-blue-600 text-sm line-clamp-1 flex-grow">
+                    {job.job_role || job.title}
+                  </h4>
+                  {job.category === 'Remote' && (
+                    <span className="flex-shrink-0 ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
+                      Remote
+                    </span>
                   )}
-                </Link>
-              ))
-            ) : (
-              <div className="p-4 text-center text-gray-500">
-                <p className="text-sm mb-2">No trending jobs available</p>
-                <button
-                  onClick={fetchTrendingJobs}
-                  className="text-xs text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  Refresh
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+                </div>
+                <p className="text-xs text-gray-600 mb-2 line-clamp-1">
+                  {job.company_name || job.company}
+                </p>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span className="line-clamp-1">{formatJobLocation(job)}</span>
+                  <span>{job.posted_on ? formatDate(job.posted_on) : formatDate(job.publishedAt)}</span>
+                </div>
+                {job.salary_package && (
+                  <div className="mt-1 text-xs text-blue-600 font-medium">
+                    {job.salary_package}
+                  </div>
+                )}
+              </Link>
+            ))
+          ) : (
+            <div className="p-4 text-center text-gray-500">
+              <p className="text-sm">No trending jobs available</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Newsletter Signup */}
