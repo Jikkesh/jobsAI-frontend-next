@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 import React from 'react';
 import Link from 'next/link';
@@ -20,11 +21,18 @@ import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';
 import CategoryJobsClient from './CategoryJobsClient';
 
 // Valid categories
-const validCategories = ['remote', 'fresher', 'internship', 'experienced'];
+const validCategories = ['remote', 'fresher', 'internship', 'experienced', 'ai'];
 const PAGE_SIZE = 10;
 
 // Category configuration
 const categoryConfig = {
+  ai: {
+    title: 'AI Jobs',
+    description: 'Explore cutting-edge AI job opportunities in machine learning, data science, and more',
+    icon: Users,
+    color: 'text-teal-600',
+    bgColor: 'bg-teal-100',
+  },
   remote: {
     title: 'Remote Jobs',
     description: 'Work from anywhere with these remote job opportunities',

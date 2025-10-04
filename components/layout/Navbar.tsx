@@ -21,6 +21,11 @@ const Navbar = () => {
 
   const navigationItems = [
     {
+      name: 'AI Jobs',
+      href: '/jobs/ai',
+      icon: Users,
+    },
+    {
       name: 'Remote Jobs',
       href: '/jobs/remote',
       icon: MapPin,

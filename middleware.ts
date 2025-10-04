@@ -15,21 +15,20 @@ const shouldSkip = (pathname: string) => {
 };
 
 export function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone();
-  const pathname = url.pathname;
+  // const url = req.nextUrl.clone();
+  // const pathname = url.pathname;
 
-  if (shouldSkip(pathname)) {
-    return NextResponse.next();
-  }
+ 
+  return NextResponse.next();
+  
 
-  // For pages, force no-store so HTML is always fresh.
-  const res = NextResponse.next();
-  console.log('Setting Cache-Control: no-store for', pathname);
-  res.headers.set('Cache-Control', 'no-store, must-revalidate');
-  return res;
+  // // For pages, force no-store so HTML is always fresh.
+  // const res = NextResponse.next();
+  // console.log('Setting Cache-Control: no-store for', pathname);
+  // res.headers.set('Cache-Control', 'no-store, must-revalidate');
+  // return res;
 }
 
 export const config = {
-  // run on all paths; we early-exit for assets/api in the handler
   matcher: '/:path*',
 };

@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -110,7 +113,7 @@ export default async function HomePage() {
             </div>
           </div>
           {/* Trust indicators */}
-          <div className="mt-8 pt-8 border-t border-blue-400/30">
+          {/* <div className="mt-8 pt-8 border-t border-blue-400/30">
             <p className="text-blue-200 text-sm mb-4">Trusted by Job Seekers from:</p>
             <div className="flex flex-wrap gap-4 text-sm text-blue-100">
               <span className="bg-blue-700/50 px-3 py-1 rounded-full">IIT</span>
@@ -119,7 +122,7 @@ export default async function HomePage() {
               <span className="bg-blue-700/50 px-3 py-1 rounded-full">MBA Institutes</span>
               <span className="bg-blue-700/50 px-3 py-1 rounded-full">Fresh Graduates</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
