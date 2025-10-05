@@ -11,6 +11,7 @@ const Footer = () => {
       { name: 'Freshers Jobs', href: '/jobs/fresher' },
       { name: 'Internship', href: '/jobs/internship' },
       { name: 'Experienced Jobs', href: '/jobs/experienced' },
+      { name: 'AI Jobs', href: '/jobs/ai' },
     ],
     'Company': [
       { name: 'About Us', href: '/about' },

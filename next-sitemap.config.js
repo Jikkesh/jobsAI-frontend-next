@@ -16,6 +16,7 @@ module.exports = {
       await config.transform(config, '/jobs/internship'),
       await config.transform(config, '/jobs/fresher'),
       await config.transform(config, '/jobs/experienced'),
+      await config.transform(config, '/jobs/ai'),
     ]
   },
   robotsTxtOptions: {

@@ -20,7 +20,57 @@ import Sidebar from '@/components/layout/Sidebar';
 import { Metadata } from 'next';
 import { axiosJobsApi as jobsApi } from '@/lib/jobs-api';
 
+// Dummy top stories data matching BlogCard props
+const topStories = [
+  {
+    id: 'high-paying-remote-jobs-2024',
+    title: '10 High-Paying Remote Jobs You Can Start Today',
+    excerpt: 'Discover lucrative remote opportunities that offer competitive salaries and flexible work arrangements. From software development to digital marketing, explore careers that let you work from anywhere.',
+    author: 'Sarah Johnson',
+    publishedAt: '2024-01-15T09:00:00Z',
+    readTime: '5 min read',
+    image: 'https://images.pexels.com/photos/4050291/pexels-photo-4050291.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    category: 'Career Advice',
+  },
+  {
+    id: 'resume-writing-guide-2024',
+    title: 'How to Write a Resume That Gets You Hired',
+    excerpt: 'Expert tips on crafting a compelling resume that stands out to recruiters and hiring managers. Learn the latest formatting trends and what employers really want to see.',
+    author: 'Mike Chen',
+    publishedAt: '2024-01-14T14:30:00Z',
+    readTime: '7 min read',
+    image: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    category: 'Resume Tips',
+  },
+  {
+    id: 'interview-preparation-checklist',
+    title: 'The Ultimate Interview Preparation Checklist',
+    excerpt: "Master your next job interview with our comprehensive preparation guide. From researching the company to handling tough questions, we've got you covered.",
+    author: 'Emily Rodriguez',
+    publishedAt: '2024-01-13T11:15:00Z',
+    readTime: '6 min read',
+    image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    category: 'Interview Tips',
+  },
+  {
+    id: 'tech-skills-in-demand-2024',
+    title: 'Most In-Demand Tech Skills for 2024',
+    excerpt: 'Stay ahead of the curve with these trending technical skills that employers are actively seeking. From AI and machine learning to cloud computing and cybersecurity.',
+    author: 'David Park',
+    publishedAt: '2024-01-12T16:45:00Z',
+    readTime: '8 min read',
+    image: 'https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    category: 'Tech Careers',
+  },
+];
+
 const jobCategories = [
+  {
+    name: 'AI Jobs',
+    icon: Building2,
+    count: 512,
+    href: '/jobs/ai',
+  },
   {
     name: 'Remote Jobs',
     icon: MapPin,
@@ -86,12 +136,12 @@ export default async function HomePage() {
 
             {/* Main Headline with better keyword targeting */}
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-balance">
-              Find <span className="text-white">Jobs in India</span> - Remote, Fresher & Internships
+              Find <span className="text-white">AI Jobs in India</span> - also Remote, Fresher & Internships
             </h1>
 
             {/* Enhanced description with location and job type keywords */}
             <p className="text-xl lg:text-2xl mb-8 text-blue-100 leading-relaxed">
-              Discover latest job opportunities across India. Get remote work positions,
+              Discover latest job opportunities across India. Get remote work positions, AI jobs,
               fresher jobs in top companies, and internship programs. Start your career journey today.
             </p>
 
@@ -169,7 +219,7 @@ export default async function HomePage() {
                     </Link>
                   );
                 })}
-              </div>  
+              </div>
             </section>
 
             {/* Ad Slot Between Sections */}
@@ -182,6 +232,34 @@ export default async function HomePage() {
             {/* Featured Jobs by Category */}
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Job Opportunities</h2>
+
+              {/* AI Jobs */}
+              {/* <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-blue-600" />
+                    AI Jobs
+                  </h3>
+                  <Link
+                    href="/jobs/ai"
+                    className="text-blue-600 hover:text-blue-800 text-sm font-medium inline-flex items-center gap-1"
+                  >
+                    View All
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {latestJobsData.Remote?.length > 0 ? (
+                    latestJobsData.Remote.map((job: any) => (
+                      <JobCard key={job.job_slug} job={job} />
+                    ))
+                  ) : (
+                    <div className="col-span-2 text-center py-8 text-gray-500">
+                      <p>No ai jobs available at the moment.</p>
+                    </div>
+                  )}
+                </div>
+              </div> */}
 
               {/* Remote Jobs */}
               <div className="mb-8">
@@ -303,15 +381,15 @@ export default async function HomePage() {
                   <TrendingUp className="h-6 w-6 text-blue-600" />
                   Top Stories
                 </h2>
-                <Link 
-                  href="/blog" 
+                <Link
+                  href="/blog"
                   className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1"
                 >
                   View All
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {topStories.map((story, index) => (
                   <BlogCard
@@ -332,7 +410,7 @@ export default async function HomePage() {
 
         </div>
       </div>
-      
+
     </div>
   );
 }

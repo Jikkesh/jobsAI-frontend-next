@@ -75,8 +75,8 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://jobsai.in',
     siteName: 'Jobs AI',
-    title: 'Jobs AI | Find Freshers Jobs | Internship Opportunities | Remote Jobs in India | Career Growth in Tech',
-    description: 'Discover thousands of IT job opportunities across India. The ultimate platform for freshers, experienced professionals, students seeking internships and Remote jobs in the tech industry.',
+    title: 'Jobs AI | AI Jobs | Find Freshers Jobs | Internship Opportunities | Remote Jobs in India | Career Growth in Tech',
+    description: 'Discover thousands of IT job opportunities across India. The ultimate platform for freshers, experienced professionals, students seeking internships and AI jobs in the tech industry.',
     images: [
       {
         url: 'https://jobsai.in/social/og-image-1200x630.jpg',
@@ -92,8 +92,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@jobsAI_',
     creator: '@jobsAI_',
-    title: 'Jobs AI | AI-Powered Job Discovery Platform | Fresher, Internship & Remote Jobs in India',
-    description: 'Jobs AI is India\'s leading job platform for tech careers. Find exclusive fresher jobs, internships, experienced roles & remote jobs in the IT industry.',
+    title: 'Jobs AI | AI Jobs, Fresher, Internship & Remote Jobs in India',
+    description: 'Jobs AI is India\'s leading job platform for tech careers. Find exclusive AI jobs, fresher jobs, internships, experienced roles & remote jobs in the IT industry.',
     images: [
       {
         url: 'https://jobsai.in/social/twitter-card-1200x600.jpg',
@@ -170,7 +170,7 @@ export default function RootLayout({
               "alternateName": "JobsAI",
               "url": "https://jobsai.in",
               "logo": "https://jobsai.in/logo.png",
-              "description": "Jobs AI is India's leading job platform for tech careers, offering a wide range of opportunities including fresher jobs, internships, experienced roles, and remote jobs in the IT industry.",
+              "description": "Jobs AI is India's leading job platform for tech careers, offering a wide range of opportunities including AI jobs, fresher jobs, internships, experienced roles, and remote jobs in the IT industry.",
               "foundingDate": "2025",
               "contactPoint": {
                 "@type": "ContactPoint",
@@ -202,7 +202,7 @@ export default function RootLayout({
               "@type": "JobBoard",
               "name": "Jobs AI",
               "url": "https://jobsai.in",
-              "description": "Find the latest IT jobs, fresher positions, internships, and remote work opportunities in India",
+              "description": "Find the latest IT jobs, AI jobs, fresher positions, internships, and remote work opportunities in India",
               "provider": {
                 "@type": "Organization",
                 "name": "Jobs AI",
